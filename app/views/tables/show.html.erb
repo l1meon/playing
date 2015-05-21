@@ -1,0 +1,22 @@
+<h1>Numele mesei: <%= @table.name %></h1>
+<sub>Nr. maxim de jucatori: <%= @table.max_users %></sub>
+<h3>Stavka per jucator: <%= @table.bet %></h3>
+<hr>
+<h3><%= @table.connected_players %></h3>
+<%= yield :notice%>
+<% if user_signed_in? %>
+    <%= link_to 'Place bet', place_bet_table_path, method: :post %>
+<% end %>
+
+<% request.url %>
+<%= link_to 'Edit', edit_table_path(@table) %> |
+<%= link_to 'Back', tables_path %>
+
+<h2><%= all_users %></h2>
+<%= form_tag(play_game_table_path, method: :get) do %>
+    <%= number_field_tag :number, params[:number], placeholder: 'Place number ' %>
+    <button type="submit">Place number</button>
+<% end %>
+<h1><%= notice%></h1>
+<%= link_to 'Clean', clean_table_path, method: :patch %>
+<h2><%= all_who_bet %></h2>
