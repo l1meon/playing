@@ -4,19 +4,12 @@ class TablesController < ApplicationController
 
   def play_game
     if check_players
-      add_user_to_game(current_user.email, params[:number])
+      add_user_to_game(current_user.email, params[:number], @table.id)
       @tb = TableGame.create(table_id: @table.id, user_id: current_user.id)
       redirect_to @table
     else
       redirect_to @table, notice: 'Full'
     end
-    if @users == 3
-      repartize_users(@users.count)
-    end
-  end
-
-  def display_winners
-    winners_array
   end
 
   def clear_players
@@ -35,7 +28,6 @@ class TablesController < ApplicationController
 
   def index
     @tables = Table.where('connected_players < ?', 3)
-
   end
 
   # GET /tables/1
