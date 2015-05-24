@@ -10,14 +10,22 @@ include GameEngine
   end
 
   def info_test
-    for i in 1..3 do
+    @is_winner ||= {}
+    for i in 0..3 do
       @redis_count = $redis.zcount('table_bet_1_3_players_nr_13', i, i)
       if @redis_count == 1
-        @number_winner = @redis_count
         @table_winner = $redis.zrangebyscore('table_bet_1_3_players_nr_13', i, i)
+        @number_winner = $redis.zscore('table_bet_1_3_players_nr_13', @table_winner)
+        @is_winner = { 'number' => @number_winner.to_i, 'user' => @table_winner.join(' ')}
       end
     end
-
-    @table_winner
+    unless @is_winner.empty?
+      %(
+    The winner number: #{@is_winner['number']}
+      \n
+    The winner player: #{@is_winner['user']}
+      )
+    end
   end
+
 end
