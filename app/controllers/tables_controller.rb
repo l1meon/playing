@@ -16,6 +16,7 @@ class TablesController < ApplicationController
     if @table.connected_players == 3
       @table.update_attribute(:connected_players, @table.connected_players = 0)
       $redis.del('users')
+      $redis.del("table_bet_1_3_players_nr_#{@table.id}")
       redirect_to @table, notice: 'Free room'
     end
   end
