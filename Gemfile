@@ -45,4 +45,5 @@ end
 gem 'redis', '~> 3.0.0'
 gem 'hiredis'
 gem 'devise'
+gem 'slim-rails'
 

@@ -10,6 +10,7 @@ class TablesController < ApplicationController
     else
       redirect_to @table, notice: 'Full'
     end
+
   end
 
   def clear_players
